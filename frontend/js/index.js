@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (addProductButton) {
             addProductButton.addEventListener('click', function () {
                 // Load the modal from an external file
-                fetch('/addproduct.html')
+                fetch('/frontend/addproduct.html')
                     .then(response => response.text())
                     .then(html => {
                         document.getElementById('modalContainer').innerHTML = html;
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (addProductButton) {
             addProductButton.addEventListener('click', function () {
                 // Load modal from external file
-                fetch('/editproduct.html')
+                fetch('/frontend/editproduct.html')
                     .then(response => response.text())
                     .then(html => {
                         document.getElementById('modalContainer').innerHTML = html;
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (addOrderButton) {
             addOrderButton.addEventListener('click', function () {
                 // Load the modal from an external file
-                fetch('/addorder.html')
+                fetch('/frontend/addorder.html')
                     .then(response => response.text())
                     .then(html => {
                         document.getElementById('modalContainer').innerHTML = html;
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (addOrderButton) {
             addOrderButton.addEventListener('click', function () {
                 // Load modal from external file
-                fetch('/editorder.html')
+                fetch('/frontend/editorder.html')
                     .then(response => response.text())
                     .then(html => {
                         document.getElementById('modalContainer').innerHTML = html;
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (addSaleButton) {
             addSaleButton.addEventListener('click', function () {
                 // Load modal from external file
-                fetch('/addsale.html')
+                fetch('/frontend/addsale.html')
                     .then(response => response.text())
                     .then(html => {
                         document.getElementById('modalContainer').innerHTML = html;
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
         viewDetailsButtons.forEach(button => {
             button.addEventListener('click', function () {
                 // Load the modal from an external file
-                fetch('/viewdetailsale.html')
+                fetch('/frontend/viewdetailsale.html')
                     .then(response => response.text())
                     .then(html => {
                         document.getElementById('modalContainer').innerHTML = html;
