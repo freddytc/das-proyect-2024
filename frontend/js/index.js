@@ -119,6 +119,55 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
     
+    // Function to open the add sale modal
+    const attachAddSaleModalEvent = () => {
+        const addSaleButton = document.getElementById('addSaleButton');
+        if (addSaleButton) {
+            addSaleButton.addEventListener('click', function () {
+                // Load modal from external file
+                fetch('/addsale.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('modalContainer').innerHTML = html;
+
+                        // Show modal
+                        var modal = new bootstrap.Modal(document.getElementById('addSaleModal'));
+                        modal.show();
+                    });
+            });
+        }
+    };
+
+    // Function to open the modal to view sales details
+    const attachViewSaleDetailsModalEvent = () => {
+        const viewDetailsButtons = document.querySelectorAll('.viewSaleDetailsButton'); // Usar un selector para todos los botones de ver detalles
+        viewDetailsButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                // Load the modal from an external file
+                fetch('/viewdetailsale.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('modalContainer').innerHTML = html;
+
+                        // Fill in the details of the sale (you can adjust this part according to the available data)
+                        document.getElementById('saleId').value = this.dataset.saleId;
+                        document.getElementById('productName').value = this.dataset.productName;
+                        document.getElementById('clientName').value = this.dataset.clientName;
+                        document.getElementById('saleDate').value = this.dataset.saleDate;
+                        document.getElementById('amount').value = this.dataset.amount;
+                        document.getElementById('total').value = this.dataset.total;
+                        // Show modal
+                        var modal = new bootstrap.Modal(document.getElementById('viewSaleDetailsModal'));
+                        modal.show();
+                    });
+            });
+        });
+    };
+
+
+    // Load the default product view
+    loadContent('Products.html');
+
     // Manage clicks on sidebar links
     document.querySelectorAll('.sidebar .nav-link').forEach(link => {
         link.addEventListener('click', function (event) {
