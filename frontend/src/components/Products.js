@@ -1,19 +1,31 @@
-// src/components/Products.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function Products({ setShowProductModal, onEditProduct }) {
-  const [products, setProducts] = useState([
-    { id: 1, name: "Product 1", price: 10.0, amount: 100 },
-    { id: 2, name: "Product 2", price: 20.0, amount: 200 },
-    { id: 3, name: "Product 3", price: 30.0, amount: 300 },
-  ]);
-  
+  const [products, setProducts] = useState([]);
 
-  const deleteProduct = (id) => {
-    const filteredProducts = products.filter((product) => product.id !== id);
-    setProducts(filteredProducts);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/products"); 
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const deleteProduct = async (id) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/products/${id}`);
+      const filteredProducts = products.filter((product) => product.id !== id);
+      setProducts(filteredProducts);
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
   };
-
   const editProduct = (product) => {
     onEditProduct(product);
   };
@@ -62,4 +74,3 @@ function Products({ setShowProductModal, onEditProduct }) {
 }
 
 export default Products;
-

@@ -43,7 +43,7 @@ function App() {
     setShowDetailSaleModal(true);
   };
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false); 
+  /*const [isAuthenticated, setIsAuthenticated] = useState(false); 
 
   const handleLogin = (username, password) => {
     //  user authentication
@@ -51,7 +51,7 @@ function App() {
     console.log("Password:", password);
 
     setIsAuthenticated(true);
-  }
+  }*/
 
   return (
 

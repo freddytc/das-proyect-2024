@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function SalesManagement({ setShowSaleModal, onSelectSale }) {
-  //  statement of sales
-  const [sales, setSales] = useState([
-    { id: 1, productName: "Product A", client: "John Doe", saleDate: "2024-10-01", total: 150.0 },
-    { id: 2, productName: "Product B", client: "Jane Smith", saleDate: "2024-10-02", total: 200.0 },
-    { id: 3, productName: "Product C", client: "Bob Johnson", saleDate: "2024-10-03", total: 300.0 },
-  ]);
+  const [sales, setSales] = useState([]);
 
-  const viewSaleDetails = (sales) => {
-    onSelectSale(sales);
+  // Función para obtener las ventas del backend
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/sales") // Call the backend endpoint
+      .then((response) => {
+        setSales(response.data); // Stores the data in the “salts” status
+      })
+      .catch((error) => {
+        console.error("Error fetching sales data:", error);
+      });
+  }, []); // This effect is executed only once when loading the component.
+
+  const viewSaleDetails = (sale) => {
+    onSelectSale(sale);
   };
 
   return (
@@ -27,7 +35,7 @@ function SalesManagement({ setShowSaleModal, onSelectSale }) {
         <thead className="table-dark">
           <tr>
             <th>ID</th>
-            <th>Product Name</th>
+            <th>User Name</th>
             <th>Client</th>
             <th>Sale Date</th>
             <th>Total</th>
@@ -38,7 +46,7 @@ function SalesManagement({ setShowSaleModal, onSelectSale }) {
           {sales.map((sale) => (
             <tr key={sale.id}>
               <td>{sale.id}</td>
-              <td>{sale.productName}</td>
+              <td>{sale.user?.username}</td>
               <td>{sale.client}</td>
               <td>{sale.saleDate}</td>
               <td>{sale.total}</td>
