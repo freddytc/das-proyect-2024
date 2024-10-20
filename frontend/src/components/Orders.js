@@ -1,29 +1,33 @@
-// src/components/Orders.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-function Orders({ setShowModal, onEditOrder }) {
-  const [orders, setOrders] = useState([
-    { id: 1, client: "John Doe", orderDate: "2024-10-01", total: 150.0, status: "Pending" },
-    { id: 2, client: "Jane Smith", orderDate: "2024-10-02", total: 200.0, status: "Completed" },
-    { id: 3, client: "Bob Johnson", orderDate: "2024-10-03", total: 300.0, status: "Shipped" },
-  ]);
+function OrdersManagement({ setShowOrderModal, onSelectOrder }) {
+  const [orders, setOrders] = useState([]);
 
-  const deleteOrder = (id) => {
-    const filteredOrders = orders.filter((order) => order.id !== id);
-    setOrders(filteredOrders);
-  };
+  // Get backend commands
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/orders") // Endpoint to get all commands
+      .then((response) => {
+        setOrders(response.data); // Stores the data in the state
+      })
+      .catch((error) => {
+        console.error("Error fetching orders data:", error);
+      });
+  }, []); // Runs only when the component is loaded
 
-  const editOrder = (order) => {
-    onEditOrder(order); 
+  const viewOrderDetails = (order) => {
+    onSelectOrder(order);
   };
 
   return (
     <div className="container mt-5">
-      <h1 className="text-center mb-4">Order Management</h1>
+      <h1 className="text-center mb-4">Orders Management</h1>
 
       <div className="mb-3 text-end">
-        <button className="btn btn-outline-primary" onClick={() => setShowModal(true)}>
-          Add New
+        <button className="btn btn-outline-primary" onClick={() => setShowOrderModal(true)}>
+          New Order
         </button>
       </div>
 
@@ -31,7 +35,7 @@ function Orders({ setShowModal, onEditOrder }) {
         <thead className="table-dark">
           <tr>
             <th>ID</th>
-            <th>Client</th>
+            <th>Supplier</th>
             <th>Order Date</th>
             <th>Total</th>
             <th>Status</th>
@@ -47,11 +51,11 @@ function Orders({ setShowModal, onEditOrder }) {
               <td>{order.total}</td>
               <td>{order.status}</td>
               <td>
-                <button className="btn btn-warning btn-sm me-2" onClick={() => editOrder(order)}>
-                  Edit
-                </button>
-                <button className="btn btn-danger btn-sm" onClick={() => deleteOrder(order.id)}>
-                  Delete
+                <button
+                  className="btn btn-info btn-sm"
+                  onClick={() => viewOrderDetails(order)}
+                >
+                  View Details
                 </button>
               </td>
             </tr>
@@ -62,4 +66,4 @@ function Orders({ setShowModal, onEditOrder }) {
   );
 }
 
-export default Orders;
+export default OrdersManagement;
